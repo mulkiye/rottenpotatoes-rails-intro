@@ -11,7 +11,15 @@ class MoviesController < ApplicationController
   end
 
   def index
-    @movies = Movie.all
+    @movies = Movie.all()
+    
+    sort = params[:sort] || session[:sort]
+    case sort
+    when 'title'
+      @title_header = {:title => :asc},'hilite'
+    when 'release_date'
+      @release_date_header = 'hilite', {:release_date => :asc}
+    end
     @movies = Movie.order(params[:sort_by])
   end
 
